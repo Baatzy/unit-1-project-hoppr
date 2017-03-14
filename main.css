@@ -1,9 +1,36 @@
-.green-nav {
-  background: linear-gradient(to bottom, #00ffb3 0%, #46db00 100%);
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+input[type="number"] {
+    -moz-appearance: textfield;
+}
+
+.gradient {
+  background: linear-gradient(to bottom, #ffbf00 0%, #ff9100 100%);
 }
 
 .logo {
   font: futura;
   font-size: 80px;
   color: #ffffff;
+}
+
+.alert-style {
+  font-size: 20px;
+  width: 400px;
+  margin: auto;
+}
+
+.shadow {
+  text-shadow: 0px 0px 80px #fffc00;
+  /*text-shadow: 0px 0px 1px #666666;*/
+}
+
+/*fffc00*/
+
+.nav-height {
+  height: 125px;
 }

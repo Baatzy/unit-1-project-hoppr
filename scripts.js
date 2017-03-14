@@ -1,40 +1,61 @@
-// Get users geolocation via zip code
-var lat = '';
-var lng = '';
-var address = 98115
-geocoder.geocode( { 'address': address}, function(results, status) {
-  if (status == google.maps.GeocoderStatus.OK) {
-     lat = results[0].geometry.location.lat();
-     lng = results[0].geometry.location.lng();
+let userZip = 0;
+let userLat = 0;
+let userLong = 0;
+
+// Get user's zip code
+$('form').on('submit', function(e) {
+  e.preventDefault();
+  numZip = $('#zip').val();
+  stringZip = numZip.toString();
+
+  if (stringZip.length === 5) {
+    userZip = numZip;
+    getBreweries();
   } else {
-    alert("Geocode was not successful for the following reason: " + status);
+  $("#div1").fadeIn(200).delay(2000).fadeOut(200);
   }
 });
-alert('Latitude: ' + lat + ' Logitude: ' + lng);
 
+function getBreweries () {
 
-navigator.geolocation.getCurrentPosition(function (position) {
-  position.coords.latitude
-  position.coords.longitude
-
-
-  let userLocation = "";
-
-  // Scripts
-
+  // Get users geolocation via zip code
   $.ajax({
-    url: "http://galvanize-cors-proxy.herokuapp.com/http://api.brewerydb.com/v2/search/geo/point?lat=47.681436&lng=-122.326540&key=c97314af1e304cd0ad2f0d5e2cff7c18",
+    url: `http://maps.googleapis.com/maps/api/geocode/json?address=${userZip}`,
     method: "GET"
-  }).then(function (results) {
-    let breweryNames = [];
+  }).then(function (mapsResult) {
+    userLat = mapsResult.results[0].geometry.location.lat;
+    userLong = mapsResult.results[0].geometry.location.lng;
 
-    for (var i = 0; i < results.data.length; i++) {
-      if (results.data[i].isClosed === "N") {
-        breweryNames.push(results.data[i].brewery.name);
-        console.log(breweryNames);
-        $('.landing').append(`<li>${breweryNames[i], i}</li>`);
+  // BreweryDB API lookup for breweries in 10mile radius
+    $.ajax({
+      url: `http://galvanize-cors-proxy.herokuapp.com/http://api.brewerydb.com/v2/search/geo/point?lat=${userLat}&lng=${userLong}&key=c97314af1e304cd0ad2f0d5e2cff7c18`,
+      method: "GET"
+    }).then(function (breweryResults) {
+      console.log('all reported breweries: ' + breweryResults.data.length);
+
+      // Filter out closed breweries
+      let numOpenBreweries = 0;
+
+      for (var i = 0; i < breweryResults.data.length; i++) {
+        if (breweryResults.data[i].isClosed === "N") {
+          numOpenBreweries ++;
+        }
       }
-    }
-  });
+      console.log('open breweries is: ' + numOpenBreweries);
 
-});
+      // Randomly select 10 breweries
+
+
+
+      // for (var i = 0; i < breweryResults.data.length; i++) {
+      //   if (breweryResults.data[i].isClosed === "N") {
+      //     breweryNames.push(breweryResults.data[i].brewery.name);
+      //     $('.landing').append(`<li>${breweryNames[i]}, ${i}</li>`);
+      //   }
+      // }
+
+      let breweryNames = [];
+      // Separate loop for appending
+    });
+  });
+}

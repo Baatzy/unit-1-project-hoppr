@@ -20,9 +20,18 @@
 
 <body>
 
-  <nav class="row">
-    <div class="container-fluid green-nav">
-      <div class="col-xs-offset-1 logo">Hoppr</div>
+  <nav class="row container-fluid gradient nav-height">
+    <div class="col-xs-3">
+      <div class="col-xs-offset-1 logo shadow">Hoppr</div>
+    </div>
+    <div class="col-xs-9">
+      <form class="">
+        <fieldset class="">
+          <input id="zip" type="number" name="zip" placeholder="Enter current 5 digit zip!">
+        </fieldset>
+        <input class="" type="submit" value="Let's go!">
+      </form>
+      <div id="div1" class="alert text-center alert-danger alert-style collapse">Oops, try a five digit numeric zip code!</div>
     </div>
   </nav>
 
