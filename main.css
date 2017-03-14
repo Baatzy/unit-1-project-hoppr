@@ -1,0 +1,9 @@
+.green-nav {
+  background: linear-gradient(to bottom, #00ffb3 0%, #46db00 100%);
+}
+
+.logo {
+  font: futura;
+  font-size: 80px;
+  color: #ffffff;
+}
