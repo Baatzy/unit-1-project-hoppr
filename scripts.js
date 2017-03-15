@@ -2,6 +2,18 @@ let userZip = 0;
 let userLat = 0;
 let userLong = 0;
 
+// // Randomly select 10 breweries later
+// function randomSize() {
+//   if (numOpenBreweries < 1) {
+//     $("#div2").fadeIn(200).delay(3000).fadeOut(200);
+//     break;
+//   } else if (numOpenBreweries < 5) {
+//     return numOpenBreweries;
+//   } else {
+//     return 5;
+//   }
+// }
+
 // Get user's zip code
 $('form').on('submit', function(e) {
   e.preventDefault();
@@ -12,7 +24,7 @@ $('form').on('submit', function(e) {
     userZip = numZip;
     getBreweries();
   } else {
-  $("#div1").fadeIn(200).delay(2000).fadeOut(200);
+    $("#div1").fadeIn(200).delay(3000).fadeOut(200);
   }
 });
 
@@ -31,7 +43,7 @@ function getBreweries () {
       url: `http://galvanize-cors-proxy.herokuapp.com/http://api.brewerydb.com/v2/search/geo/point?lat=${userLat}&lng=${userLong}&key=c97314af1e304cd0ad2f0d5e2cff7c18`,
       method: "GET"
     }).then(function (breweryResults) {
-      console.log('all reported breweries: ' + breweryResults.data.length);
+      console.log('All reported breweries: ' + breweryResults.data.length);
 
       // Filter out closed breweries
       let numOpenBreweries = 0;
@@ -41,15 +53,28 @@ function getBreweries () {
           numOpenBreweries ++;
         }
       }
-      console.log('open breweries is: ' + numOpenBreweries);
+      console.log('Breweries still in business: ' + numOpenBreweries);
 
-      // Randomly select 10 breweries
+      // Randomly select maxiumum 5 breweries and appends to DOM
+      let randomSize = randomSize();
 
+      function randomSize() {
+        if (numOpenBreweries < 1) {
+          $("#div2").fadeIn(200).delay(3000).fadeOut(200);
+          break;
+        } else if (numOpenBreweries < 5) {
+          return numOpenBreweries;
+        } else {
+          return 5;
+        }
+      }
 
+      console.log(randomSize);
 
-      // for (var i = 0; i < breweryResults.data.length; i++) {
-      //   if (breweryResults.data[i].isClosed === "N") {
-      //     breweryNames.push(breweryResults.data[i].brewery.name);
+      // let randomNumber = Math.floor((Math.random() * randomSize) + 1);
+      //
+      // for (var i = 0; i < randomSize; i++) {
+      //
       //     $('.landing').append(`<li>${breweryNames[i]}, ${i}</li>`);
       //   }
       // }
