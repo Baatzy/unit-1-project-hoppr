@@ -2,18 +2,6 @@ let userZip = 0;
 let userLat = 0;
 let userLong = 0;
 
-// // Randomly select 10 breweries later
-// function randomSize() {
-//   if (numOpenBreweries < 1) {
-//     $("#div2").fadeIn(200).delay(3000).fadeOut(200);
-//     break;
-//   } else if (numOpenBreweries < 5) {
-//     return numOpenBreweries;
-//   } else {
-//     return 5;
-//   }
-// }
-
 // Get user's zip code
 $('form').on('submit', function(e) {
   e.preventDefault();
@@ -31,56 +19,77 @@ $('form').on('submit', function(e) {
 function getBreweries () {
 
   // Get users geolocation via zip code
-  $.ajax({
-    url: `http://maps.googleapis.com/maps/api/geocode/json?address=${userZip}`,
-    method: "GET"
-  }).then(function (mapsResult) {
+  let googleAPI = 'http://maps.googleapis.com/maps/api/geocode/json?address=';
+  let urlZipCode = `${googleAPI}${userZip}`
+
+  $.get(urlZipCode).then(function (mapsResult) {
     userLat = mapsResult.results[0].geometry.location.lat;
     userLong = mapsResult.results[0].geometry.location.lng;
 
   // BreweryDB API lookup for breweries in 10mile radius
-    $.ajax({
-      url: `http://galvanize-cors-proxy.herokuapp.com/http://api.brewerydb.com/v2/search/geo/point?lat=${userLat}&lng=${userLong}&key=c97314af1e304cd0ad2f0d5e2cff7c18`,
-      method: "GET"
-    }).then(function (breweryResults) {
+    let proxie = 'http://galvanize-cors-proxy.herokuapp.com/';
+    let breweryAPI = 'http://api.brewerydb.com/v2/search/geo/point';
+    let apiKey = 'c97314af1e304cd0ad2f0d5e2cff7c18';
+    let urlLatLng = `${proxie}${breweryAPI}?lat=${userLat}&lng=${userLong}&key=${apiKey}`
+
+    $.get(urlLatLng).then(function (breweryResults) {
       console.log('All reported breweries: ' + breweryResults.data.length);
 
       // Filter out closed breweries
       let numOpenBreweries = 0;
-
       for (var i = 0; i < breweryResults.data.length; i++) {
         if (breweryResults.data[i].isClosed === "N") {
           numOpenBreweries ++;
         }
-      }
+      };
+
       console.log('Breweries still in business: ' + numOpenBreweries);
 
       // Randomly select maxiumum 5 breweries and appends to DOM
-      let randomSize = randomSize();
-
       function randomSize() {
+
         if (numOpenBreweries < 1) {
           $("#div2").fadeIn(200).delay(3000).fadeOut(200);
-          break;
+          return;
         } else if (numOpenBreweries < 5) {
           return numOpenBreweries;
         } else {
           return 5;
         }
-      }
+      };
 
-      console.log(randomSize);
+      let randomLimit = randomSize();
 
-      // let randomNumber = Math.floor((Math.random() * randomSize) + 1);
-      //
-      // for (var i = 0; i < randomSize; i++) {
-      //
-      //     $('.landing').append(`<li>${breweryNames[i]}, ${i}</li>`);
-      //   }
-      // }
+      // Picks unique breweries equivelent to the amount determined by randomSize() and puts them into breweryIndexes[]. Thanks stack overflow for this elegant code.
+      let breweryIndexes = [];
 
-      let breweryNames = [];
-      // Separate loop for appending
+      function indexPicker () {
+
+        while (breweryIndexes.length < randomLimit) {
+          let num = Math.ceil(Math.random() * numOpenBreweries);
+
+          if (breweryIndexes.indexOf(num) > -1) continue;
+          breweryIndexes[breweryIndexes.length] = num;
+        }
+      };
+
+      indexPicker();
+
+      // Appending brewery info to the DOM
+      function appendBreweries () {
+        $('.landing').empty();
+
+        for (var i = 0; i < randomLimit; i++) {
+          console.log(breweryResults.data[breweryIndexes[i]]);
+          $(".landing").append(`<li id="brew-box">${breweryResults.data[breweryIndexes[i]].brewery.name}</li>`);
+        }
+      };
+
+      appendBreweries();
+
+
+
+
     });
   });
-}
+};
