@@ -20,14 +20,20 @@
 
 <body>
 
-  <nav class="row container-fluid gradient nav-height">
+  <nav class="row container-fluid header-style">
     <div class="col-xs-3">
-      <div class="col-xs-offset-1 logo shadow">Hoppr</div>
+      <div class="col-xs-offset-2 logo shadow">Hoppr</div>
     </div>
-    <div class="col-xs-9">
+    <div class="col-xs-9 top-padding">
       <form class="">
         <fieldset class="">
           <input id="zip" type="number" name="zip" placeholder="Enter current 5 digit zip!">
+          <label class="white-text" for="radius">Within mile radius</label>
+          <select id="radius" name="radius">
+              <option value="3">3</option>
+              <option value="5">5</option>
+              <option value="10">10</option>
+            </select>
         </fieldset>
         <input class="" type="submit" value="Let's go!">
       </form>
@@ -36,14 +42,21 @@
     </div>
   </nav>
 
-  <body>
-    <ul class="landing">
+  <main class="container-fluid row">
+    <div id="list" class="col-xs-4 list-style">
+      <div id="landing"></div>
+    </div>
+    <div id="map" class="col-xs-8 map-style"></div>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBP3Sb-r5ReM1sHrEavLFqJsoVhZ10Wd18&callback=initMap">
+    </script>
+  </main>
 
-    </ul>
-  </body>
-
-  <footer></footer>
-
+  <footer class="container-fluid row footer-style">
+    <div class="">© 2017 Stefan Baatz. All Rights Reserved</div>
+  </footer>
 </body>
 
 </html>
+
+
+<!-- (`<div class="brew-container"><img src="${breweryResults.data[breweryIndexes[i]].brewery.icon}" alt="brewery icon" style="width:40px;height:40px;"><p>${breweryResults.data[breweryIndexes[i]].brewery.name}<p></div>`) -->

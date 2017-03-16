@@ -8,14 +8,45 @@ input[type="number"] {
   -moz-appearance: textfield;
 }
 
-.gradient {
-  background: linear-gradient(to bottom, #ffde00 0%, #ff9100 100%);
+.container-fluid,
+.col-xs-9,
+.col-xs-3 {
+  padding-right: 0;
+  padding-left: 0;
+}
+
+.row {
+  margin-right: 0;
+}
+
+.header-style {
+  /*background: linear-gradient(to bottom, #ffde00 0%, #ff9100 100%);*/
+  background: linear-gradient(to bottom right, #ffe600, #ffa34f);
+  height: 125px;
+}
+
+.footer-style {
+  background: linear-gradient(to top right, #ffa34f, #ffe600);
+  height: 101px;
+  font: futura;
+  font-size: 16px;
+  color: #ffffff;
+  padding-top: 50px;
+  padding-left: 55px;
+}
+
+.white-text {
+  color: #ffffff;
 }
 
 .logo {
   font: futura;
   font-size: 80px;
   color: #ffffff;
+}
+
+.top-padding {
+  padding-top: 60px;
 }
 
 .alert-style {
@@ -25,13 +56,32 @@ input[type="number"] {
 }
 
 .shadow {
-  text-shadow: 0 0 180px #ff0000;
+  text-shadow: 0 10px 80px #ff6b00;
 }
 
-.nav-height {
-  height: 125px;
+
+
+
+.map-style {
+  height: 550px;
+  width: 66.665%;
+  padding-right: 0;
+  padding-left: 0;
 }
 
-/*.brewery-container {
+.list-style {
+  height: 550px;
+  width: 33.334%;
+  padding-right: 0;
+  padding-left: 0;
+}
 
-}*/
+.brew-container {
+  height: 110px;
+  width: 100%;
+  padding: 20px;
+}
+
+.brew-container p {
+  font-size: 20px;
+}
