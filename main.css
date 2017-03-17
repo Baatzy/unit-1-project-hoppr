@@ -1,3 +1,9 @@
+/*
+===========================================
+General style overwrites for forms styles and Bootstrap CSS
+===========================================
+*/
+
 input[type="number"]::-webkit-outer-spin-button,
 input[type="number"]::-webkit-inner-spin-button {
     -webkit-appearance: none;
@@ -19,9 +25,11 @@ input[type="number"] {
   margin-right: 0;
 }
 
-.algn {
-  display: inline;
-}
+/*
+===========================================
+Body styles
+===========================================
+*/
 
 .header-style {
   /*background: linear-gradient(to bottom, #ffde00 0%, #ff9100 100%);*/
@@ -37,30 +45,6 @@ input[type="number"] {
   color: #ffffff;
   padding-top: 50px;
   padding-left: 55px;
-}
-
-.white-text {
-  color: #ffffff;
-}
-
-.logo {
-  font: futura;
-  font-size: 80px;
-  color: #ffffff;
-}
-
-.top-padding {
-  padding-top: 60px;
-}
-
-.alert-style {
-  font-size: 20px;
-  width: 400px;
-  margin: auto;
-}
-
-.shadow {
-  text-shadow: 0 10px 80px #ff6b00;
 }
 
 .map-style {
@@ -95,4 +79,34 @@ input[type="number"] {
 
 .icon-margin {
   margin-top: 15px;
+}
+
+.top-padding {
+  padding-top: 60px;
+}
+
+.alert-style {
+  font-size: 20px;
+  width: 400px;
+  margin: auto;
+}
+
+/*
+===========================================
+Text styles
+===========================================
+*/
+
+.white-text {
+  color: #ffffff;
+}
+
+.logo {
+  font: futura;
+  font-size: 80px;
+  color: #ffffff;
+}
+
+.shadow {
+  text-shadow: 0 10px 80px #ff6b00;
 }

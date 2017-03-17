@@ -1,13 +1,14 @@
 // Calls GoogleMaps API on page via HTML script
 let map;
 let marker;
+let markerLocations = [];
 
 function initMap() {
   var defaultCenter = {
     lat: 38.7832469,
     lng: -100.0114442
   };
-    map = new google.maps.Map(document.getElementById('map'), {
+  map = new google.maps.Map(document.getElementById('map'), {
     zoom: 4,
     center: defaultCenter
   });
@@ -62,8 +63,6 @@ function getBreweries() {
         }
       };
 
-      console.log(breweryResults);
-
       console.log('Breweries still in business: ' + numOpenBreweries);
 
       // Randomly select maxiumum 5 breweries and appends to DOM
@@ -107,11 +106,14 @@ function getBreweries() {
         initMap();
 
         for (var i = 0; i < randomLimit; i++) {
-          console.log(breweryResults.data[breweryIndexes[i]]);
+
           let breweryObj = breweryResults.data[breweryIndexes[i]];
 
           marker = new google.maps.Marker({
-            position: {lat: breweryObj.latitude, lng: breweryObj.longitude},
+            position: {
+              lat: breweryObj.latitude,
+              lng: breweryObj.longitude
+            },
             map: map,
             title: breweryObj.brewery.name
           });
@@ -119,38 +121,51 @@ function getBreweries() {
           // To add the marker to the map, call setMap();
           marker.setMap(map);
 
+          markerLocations.push([marker[i], breweryObj.latitude, breweryObj.longitude]);
+
           if (breweryObj.brewery.images == undefined) {
             $("#landing").append(`<div class="brew-container d-inline-block"><img class="col-xs-3 icon-margin" src="./assets/images/no-image-available-icon.jpg" alt="brewery icon" style="width:80px;height:80px;"><div class="col-xs-9"><h5 class="">${breweryObj.brewery.name}</h5><p>${breweryObj.streetAddress}</p><p>${breweryObj.phone}</p></div></div>`).hide().fadeIn(200);
           } else {
             $("#landing").append(`<div class="brew-container d-inline-block"><img class="col-xs-3 icon-margin" src=${breweryObj.brewery.images.squareMedium} alt="brewery icon" style="width:80px;height:80px;"><div class="col-xs-9"><h5 class="">${breweryObj.brewery.name}</h5><p>${breweryObj.streetAddress}</p><p>${breweryObj.phone}</p></div></div>`).hide().fadeIn(200);
           };
         };
+
+        // CODE IN PROGRESS
+        // Sets Google Map bounds around all markers
+        // window.map = new google.maps.Map(document.getElementById('map'), {
+        //   mapTypeId: google.maps.MapTypeId.ROADMAP
+        // });
+        //
+        // var infowindow = new google.maps.InfoWindow();
+        // var bounds = new google.maps.LatLngBounds();
+        //
+        // for (i = 0; i < markerLocations.length; i++) {
+        //   marker = new google.maps.Marker({
+        //     position: new google.maps.LatLng(markerLocations[i][1], markerLocations[i][2]),
+        //     map: map
+        //   });
+        //
+        //   bounds.extend(marker.position);
+        //
+        //   google.maps.event.addListener(marker, 'click', (function(marker, i) {
+        //     return function() {
+        //       infowindow.setContent(markerLocations[i][0]);
+        //       infowindow.open(map, marker);
+        //     }
+        //   })(marker, i));
+        // }
+        //
+        // map.fitBounds(bounds);
+        //
+        // var listener = google.maps.event.addListener(map, "idle", function() {
+        //   // map.setZoom(3);
+        //   google.maps.event.removeListener(listener);
+        // });
+        // CODE IN PROGRESS
+
       };
 
       appendBreweries();
-
-      // $("#map").hide()
-
-      // Call Google Maps again but with new brewery pins
-      // function initMap() {
-      //
-      //   var myLatLng = {
-      //     lat: userLat,
-      //     lng: userLong
-      //   };
-      //
-      //   var map = new google.maps.Map(document.getElementById('map'), {
-      //     zoom: 4,
-      //     center: myLatLng
-      //   });
-      //
-      //   var marker = new google.maps.Marker({
-      //     position: myLatLng,
-      //     map: map,
-      //     title: 'Hello World!'
-      //   });
-      // }
-
 
     });
   });
