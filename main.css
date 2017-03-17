@@ -19,6 +19,10 @@ input[type="number"] {
   margin-right: 0;
 }
 
+.algn {
+  display: inline;
+}
+
 .header-style {
   /*background: linear-gradient(to bottom, #ffde00 0%, #ff9100 100%);*/
   background: linear-gradient(to bottom right, #ffe600, #ffa34f);
@@ -59,9 +63,6 @@ input[type="number"] {
   text-shadow: 0 10px 80px #ff6b00;
 }
 
-
-
-
 .map-style {
   height: 550px;
   width: 66.665%;
@@ -79,9 +80,19 @@ input[type="number"] {
 .brew-container {
   height: 110px;
   width: 100%;
-  padding: 20px;
+  margin-left: 50px;
+}
+
+.brew-container h5 {
+  margin-left: 10px;
 }
 
 .brew-container p {
-  font-size: 20px;
+  font-size: 16px;
+  margin-left: 14px;
+  /*margin-top: 5px;*/
+}
+
+.icon-margin {
+  margin-top: 15px;
 }

@@ -107,8 +107,14 @@ function getBreweries () {
 
         for (var i = 0; i < randomLimit; i++) {
           console.log(breweryResults.data[breweryIndexes[i]]);
-          $("#landing").append(`<div class="brew-container"><img src="${breweryResults.data[breweryIndexes[i]].brewery.images.squareMedium}" alt="brewery icon" style="width:80px;height:80px;"><p>${breweryResults.data[breweryIndexes[i]].brewery.name}</p></div>`).hide().fadeIn(200);
-        }
+          let breweryObj = breweryResults.data[breweryIndexes[i]];
+
+          if (breweryObj.brewery.images == undefined) {
+            $("#landing").append(`<div class="brew-container d-inline-block"><img class="col-xs-3 icon-margin" src="./assets/images/no-image-available-icon.jpg" alt="brewery icon" style="width:80px;height:80px;"><div class="col-xs-9"><h5 class="">${breweryObj.name}</h5><p>${breweryObj.streetAddress}</p><p>${breweryObj.phone}</p></div></div>`).hide().fadeIn(200);
+          } else {
+            $("#landing").append(`<div class="brew-container d-inline-block"><img class="col-xs-3 icon-margin" src=${breweryObj.brewery.images.squareMedium} alt="brewery icon" style="width:80px;height:80px;"><div class="col-xs-9"><h5 class="">${breweryObj.name}</h5><p>${breweryObj.streetAddress}</p><p>${breweryObj.phone}</p></div></div>`).hide().fadeIn(200);
+          };
+        };
       };
 
       appendBreweries();
@@ -116,3 +122,15 @@ function getBreweries () {
     });
   });
 };
+
+// Updated append to check tomorrow:
+//
+//   $("#landing").append(`<div class="brew-container d-inline-block"><img class="col-xs-3 icon-margin" src="./assets/images/no-image-available-icon.jpg" alt="brewery icon" style="width:80px;height:80px;"><div class="col-xs-5"><h4 class="">${breweryResults.data[breweryIndexes[i]].brewery.name}</h4><p>${breweryResults.data[breweryIndexes[i]].brewery.streetAddress}</p><p>${breweryResults.data[breweryIndexes[i]].brewery.phone}</p></div></div>`).hide().fadeIn(200);
+//
+// $("#landing").append(`<div class="brew-container d-inline-block"><img class="col-xs-3 icon-margin" src="./assets/images/no-image-available-icon.jpg" alt="brewery icon" style="width:80px;height:80px;"><div class="col-xs-9"><h4 class="">${brewery.name}</h4><p>${brewery.streetAddress}</p><p>${brewery.phone}</p></div></div>`).hide().fadeIn(200);
+
+
+// if (brewery.images == undefined) {
+//   $("#landing").append(`<div class="brew-container"><img class="col-xs-3" src="./assets/images/no-image-available-icon.jpg" alt="brewery icon" style="width:80px;height:80px;"><p>${breweryResults.data[breweryIndexes[i]].brewery.name}</p></div>`).hide().fadeIn(200);
+// } else {
+//   $("#landing").append(`<div class="brew-container"><img class="col-xs-3" src="${breweryResults.data[breweryIndexes[i]].brewery.images.squareMedium}" alt="brewery icon" style="width:80px;height:80px;"><p>${breweryResults.data[breweryIndexes[i]].brewery.name}</p></div>`).hide().fadeIn(200);
