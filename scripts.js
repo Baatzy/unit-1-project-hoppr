@@ -39,7 +39,7 @@ $('form').on('submit', function(e) {
 function getBreweries() {
 
   // Get users geolocation via zip code
-  let googleAPI = 'http://maps.googleapis.com/maps/api/geocode/json?address=';
+  let googleAPI = 'https://maps.googleapis.com/maps/api/geocode/json?address=';
   let urlZipCode = `${googleAPI}${userZip}`
 
   $.get(urlZipCode).then(function(mapsResult) {
@@ -47,7 +47,7 @@ function getBreweries() {
     userLong = mapsResult.results[0].geometry.location.lng;
 
     // BreweryDB API lookup for breweries in 5 mile radius
-    let proxie = 'http://galvanize-cors-proxy.herokuapp.com/';
+    let proxie = 'https://galvanize-cors-proxy.herokuapp.com/';
     let breweryAPI = 'http://api.brewerydb.com/v2/search/geo/point';
     let apiKey = 'c97314af1e304cd0ad2f0d5e2cff7c18';
     let urlLatLng = `${proxie}${breweryAPI}?lat=${userLat}&lng=${userLong}&radius=${stringRadius}&key=${apiKey}`
